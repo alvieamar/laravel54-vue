@@ -15,7 +15,7 @@ solution:
        window.Laravel = <?php echo json_encode([
            'csrfToken' => csrf_token(),
        ]); ?>
-<pre>
+</pre>
 
 <br>
 <h2>PR: L54V-002-Vue_Components</h2>
