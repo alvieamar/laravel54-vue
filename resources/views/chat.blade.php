@@ -7,9 +7,9 @@
 <body>
     <div id="app">
         <h1>Chat Room</h1>
-        <example></example>
+        <chat-log :messages="messages"></chat-log>
+        <chat-composer v-on:messagesent="addMessage"></chat-composer>
     </div>
-
 <script>
     window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
