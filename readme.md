@@ -16,3 +16,11 @@ solution:
            'csrfToken' => csrf_token(),
        ]); ?>
 <pre>
+
+<br>
+<h2>PR: L54V-002-Vue_Components</h2>
+Create Vue Components
+-ChatComposer
+-ChatLog
+-ChatMessage
+
