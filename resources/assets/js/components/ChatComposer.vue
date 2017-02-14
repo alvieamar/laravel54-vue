@@ -18,7 +18,9 @@
 //                console.log(this.messageText);
                 this.$emit('messagesent', {
                     message: this.messageText,
-                    user: 'test author'
+                    user: {
+                      name: $('.navbar-right .dropdown-toggle').text()
+                    }
                 });
                 this.messageText = '';
             }

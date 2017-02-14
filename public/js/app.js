@@ -11550,21 +11550,32 @@ Vue.component('chat-composer', __webpack_require__(62));
 var app = new Vue({
     el: '#app',
     data: {
-        messages: [{
-            message: 'hey!!',
-            user: 'aisle'
-        }, {
-            message: 'heyloo!!',
-            user: 'bee'
-        }]
+        messages: []
     },
     methods: {
         addMessage: function addMessage(message) {
             // add to existing messages
             this.messages.push(message);
             // persist to the database etc
-            console.log('message added');
+            //console.log('message added');
+            axios.post('/messages', message).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(error.response.data);
+                    //console.log(error.response.status);
+                    //console.log(error.response.headers);
+                }
+            });
         }
+    },
+    created: function created() {
+        var _this = this;
+
+        axios.get('/messages').then(function (response) {
+            //console.log(response);
+            _this.messages = response.data;
+        });
     }
 });
 
@@ -12421,6 +12432,9 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
 //
 //
 //
@@ -14926,7 +14940,7 @@ exports = module.exports = __webpack_require__(10)();
 
 
 // module
-exports.push([module.i, "\n.chat-log .chat-message:nth-child(even) {\n    background-color: #ccc;\n}\n", ""]);
+exports.push([module.i, "\n.chat-log .chat-message:nth-child(even) {\n    background-color: #ccc;\n}\n.empty {\n    padding: 1rem;\n    text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -32183,14 +32197,22 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "chat-log"
-  }, _vm._l((_vm.messages), function(message) {
+  }, [_vm._l((_vm.messages), function(message) {
     return _c('chat-message', {
       staticClass: "chat-message",
       attrs: {
         "message": message
       }
     })
-  }))
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.messages.length === 0),
+      expression: "messages.length === 0"
+    }],
+    staticClass: "empty"
+  }, [_vm._v("\n        Nothing here yet..\n    ")])], 2)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -32207,7 +32229,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "chat-message"
-  }, [_c('div', [_c('p', [_vm._v(_vm._s(_vm.message.message))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.message.user))])]), _vm._v(" "), _c('div')])
+  }, [_c('div', [_c('p', [_vm._v(_vm._s(_vm.message.message))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(_vm.message.user.name))])]), _vm._v(" "), _c('div')])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -40926,7 +40948,7 @@ module.exports = __webpack_require__(14);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
@@ -40948,13 +40970,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //                console.log(this.messageText);
             this.$emit('messagesent', {
                 message: this.messageText,
-                user: 'test author'
+                user: {
+                    name: $('.navbar-right .dropdown-toggle').text()
+                }
             });
             this.messageText = '';
         }
     }
 
 };
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
 
 /***/ }),
 /* 61 */
