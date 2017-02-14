@@ -12,9 +12,7 @@ Encountered error:
 Uncaught TypeError: Cannot read property 'csrfToken' of undefined(…)
 solution:
 <pre>
-<script>
        window.Laravel = <?php echo json_encode([
            'csrfToken' => csrf_token(),
        ]); ?>
-   </script>
 <pre>
